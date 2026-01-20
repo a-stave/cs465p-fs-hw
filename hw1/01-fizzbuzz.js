@@ -26,14 +26,20 @@ Use console.log() to write the proper output to the command line.
 // fizzbuzz
 // ...
 
-for (let i = 1; i <= 100; i++) {
-  if (i % 3 === 0 && i % 5 === 0) {
-    console.log("fizzbuzz");
-  } else if (i % 3 === 0) {
-    console.log("fizz");
-  } else if (i % 5 === 0) {
-    console.log("buzz");
-  } else {
-    console.log(i);
+const fizzbuzz = () => {
+  // Huh... Airbnb rule 11.1 actually forbids iterators like i++... Should mull that over.
+  for (let i = 1; i <= 100; i++) {
+    if (i % 15 === 0) {
+      // i divisible by both 3 and 5
+      console.log("fizzbuzz");
+    } else if (i % 3 === 0) {
+      console.log("fizz");
+    } else if (i % 5 === 0) {
+      console.log("buzz");
+    } else {
+      console.log(i);
+    }
   }
-}
+};
+
+fizzbuzz();
