@@ -2,11 +2,14 @@
 
 // Add your function here
 const calculateChange = function greedyCoinCounterCalculator(amount) {
+  if (!Number.isFinite(amount)) {
+    return "Error: NaN";
+  }
   if (amount > 100.0) {
     return "Error: the number is too large";
   }
-  if (amount < 0) {
-    return "Error: the number is negative";
+  if (amount <= 0) {
+    return "Error: the number less than or equal to zero";
   }
 
   // Initialize coin counts (dictionary so we can send back as an object)
@@ -20,30 +23,46 @@ const calculateChange = function greedyCoinCounterCalculator(amount) {
 
   // Convert amount to cents to avoid floating point issues
   let remainingAmount = Math.round(amount * 100);
+  let coins = `$${amount} -> `;
 
   // Greedily allocate coins
   if (remainingAmount >= 100) {
-    coinValues["dollar"] += Math.floor(remainingAmount / 100);
+    let value = Math.floor(remainingAmount / 100);
+    if (!coins.endsWith("-> ")) coins += ", ";
+    value > 1 ? (coins += value + " dollars") : (coins += value + " dollar");
+    coinValues["dollar"] = value;
     remainingAmount = remainingAmount % 100;
   }
   if (remainingAmount >= 25) {
-    coinValues["quarter"] += Math.floor(remainingAmount / 25);
+    let value = Math.floor(remainingAmount / 25);
+    if (!coins.endsWith("-> ")) coins += ", ";
+    value > 1 ? (coins += value + " quarters") : (coins += value + " quarter");
+    coinValues["quarter"] = value;
     remainingAmount = remainingAmount % 25;
   }
   if (remainingAmount >= 10) {
-    coinValues["dime"] += Math.floor(remainingAmount / 10);
+    let value = Math.floor(remainingAmount / 10);
+    if (!coins.endsWith("-> ")) coins += ", ";
+    value > 1 ? (coins += value + " dimes") : (coins += value + " dime");
+    coinValues["dime"] = value;
     remainingAmount = remainingAmount % 10;
   }
   if (remainingAmount >= 5) {
-    coinValues["nickel"] += Math.floor(remainingAmount / 5);
+    let value = Math.floor(remainingAmount / 5);
+    if (!coins.endsWith("-> ")) coins += ", ";
+    value > 1 ? (coins += value + " nickels") : (coins += value + " nickel");
+    coinValues["nickel"] = value;
     remainingAmount = remainingAmount % 5;
   }
   if (remainingAmount >= 1) {
-    coinValues["penny"] += remainingAmount;
+    let value = remainingAmount;
+    if (!coins.endsWith("-> ")) coins += ", ";
+    value > 1 ? (coins += value + " pennies") : (coins += value + " penny");
+    coinValues["penny"] = value;
     remainingAmount = 0;
   }
 
-  return coinValues;
+  return coins;
 };
 
 // Sample test cases
@@ -65,3 +84,7 @@ console.log(calculateChange(100.0));
 // $100.00 ==> 100 dollars
 console.log(calculateChange(-73.58));
 // $-73.58 ==> Error: the number is negative
+console.log(calculateChange(null));
+// NaN
+console.log(calculateChange("Three Fifty"));
+// NaN

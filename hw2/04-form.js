@@ -33,7 +33,7 @@ app.get("/form", (req, res) => {
     `);
 });
 
-app.get("/submit", (req, res) => {
+app.post("/submit", (req, res) => {
   const { name, email, comment, subscribe } = req.query;
   res.status(200);
   res.set({ "Content-Type": "text/html" });
